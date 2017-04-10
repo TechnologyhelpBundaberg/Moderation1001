@@ -1,9 +1,1 @@
-rootProject.name = 'AutoMotBot'
-repositories {
-    jcenter()
-    maven { url 'https://jitpack.io' }
-}
-dependencies {
-    compile 'net.dv8tion:JDA:3.0.0_171'
-    compile 'com.github.kaaz:configurationbuilder:c05d1a4455'
-}
+rootProject.name = 'AutoMode'

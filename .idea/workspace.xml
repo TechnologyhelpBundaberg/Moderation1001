@@ -2,25 +2,37 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8ac7fdb0-f967-4394-a69c-b38b5a09dd21" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/kotlinc.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/co/automod/bot/Main.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/co/automod/bot/main.java" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/Config.java" afterPath="$PROJECT_DIR$/src/main/java/co/automod/bot/Config.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/co/automod/bot/core/DiscordEvents.java" afterPath="$PROJECT_DIR$/src/main/java/co/automod/bot/core/DiscordEvents.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/co/automod/bot/core/Shard.java" afterPath="$PROJECT_DIR$/src/main/java/co/automod/bot/core/Shard.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/co/automod/bot/core/ShardContainer.java" afterPath="$PROJECT_DIR$/src/main/java/co/automod/bot/core/ShardContainer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/fileHashes.bin" afterPath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/fileHashes.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/fileSnapshots.bin" afterPath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/fileSnapshots.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/taskArtifacts.bin" afterPath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/taskArtifacts.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/taskArtifacts.lock" afterPath="$PROJECT_DIR$/.gradle/3.3/taskArtifacts/taskArtifacts.lock" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/.name" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/compiler.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/gradle.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/kotlinc.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_mashape_unirest_unirest_java_1_4_9.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_neovisionaries_nv_websocket_client_1_31.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__commons_codec_commons_codec_1_9.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__commons_logging_commons_logging_1_2.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__net_dv8tion_JDA_3_0_0_171.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__net_java_dev_jna_jna_4_4_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__net_sf_trove4j_trove4j_3_0_3.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_apache_commons_commons_collections4_4_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_apache_commons_commons_lang3_3_5.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_apache_httpcomponents_httpasyncclient_4_1_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_apache_httpcomponents_httpclient_4_5_2.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_apache_httpcomponents_httpcore_4_4_4.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_apache_httpcomponents_httpcore_nio_4_4_4.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_apache_httpcomponents_httpmime_4_5_2.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_json_json_20160810.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/modules/AutoMode.iml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/modules/AutoMode_main.iml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/modules/AutoMode_test.iml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/compiler.xml" afterPath="$PROJECT_DIR$/.idea/compiler.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules/AutoMode_main.iml" afterPath="$PROJECT_DIR$/.idea/modules/AutoMode_main.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules/AutoMode_test.iml" afterPath="$PROJECT_DIR$/.idea/modules/AutoMode_test.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build.gradle" afterPath="$PROJECT_DIR$/build.gradle" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/settings.gradle" afterPath="$PROJECT_DIR$/settings.gradle" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/co/automod/bot/Config.java" afterPath="$PROJECT_DIR$/src/main/java/co/automod/bot/Config.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/co/automod/bot/Main.java" afterPath="$PROJECT_DIR$/src/main/java/co/automod/bot/Main.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/.gradle/" />
@@ -836,6 +848,7 @@
     <property name="nodejs_interpreter_path" value="C:/Program Files/nodejs/node" />
     <property name="js.eslint.eslintPackage" value="" />
     <property name="js-jscs-nodeInterpreter" value="C:\Program Files\nodejs\node.exe" />
+    <property name="GO_FMT" value="false" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -1429,10 +1442,18 @@
       <updated>1491820478471</updated>
       <workItem from="1491820483355" duration="1422000" />
     </task>
+    <task id="LOCAL-00001" summary="Merge branch 'master' of https://github.com/Repulser/AutoMod&#10;&#10;# Conflicts:&#10;#&#9;src/main/co/automod/bot/main.java&#10;">
+      <created>1491824415355</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1491824415355</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="2544000" />
+    <option name="totallyTimeSpent" value="2624000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -1447,10 +1468,10 @@
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32946146" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32946146" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32946146" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32946146" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32946146" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1875" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -1475,6 +1496,11 @@
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="uh things" />
+    <MESSAGE value="Merge branch 'master' of https://github.com/Repulser/AutoMod&#10;&#10;# Conflicts:&#10;#&#9;src/main/co/automod/bot/main.java&#10;" />
+    <option name="LAST_COMMIT_MESSAGE" value="Merge branch 'master' of https://github.com/Repulser/AutoMod&#10;&#10;# Conflicts:&#10;#&#9;src/main/co/automod/bot/main.java&#10;" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
