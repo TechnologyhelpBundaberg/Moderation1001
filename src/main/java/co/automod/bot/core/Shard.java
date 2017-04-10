@@ -12,6 +12,12 @@ import net.dv8tion.jda.core.hooks.AnnotatedEventManager;
 import javax.security.auth.login.LoginException;
 
 public class Shard {
+    private final ShardContainer container;
+
+    Shard(ShardContainer container) {
+        this.container = container;
+    }
+
     public void reboot(int shardId, int totShards) throws RateLimitedException, InterruptedException {
         JDABuilder builder = new JDABuilder(AccountType.BOT).setToken(Config.discord_token);
         if (totShards > 1) {
