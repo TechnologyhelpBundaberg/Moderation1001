@@ -9,6 +9,7 @@ import net.dv8tion.jda.core.hooks.AnnotatedEventManager;
 import javax.security.auth.login.LoginException;
 
 public class main {
+    //TODO: Make this a config.json file
     public static final String token = "";
 
     public static void main(String[] args) {
