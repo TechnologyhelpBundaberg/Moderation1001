@@ -27,8 +27,9 @@ public class Shard {
         try {
             jda = builder.buildBlocking();
             jda.setEventManager(new AnnotatedEventManager());
-            //Register events
+            jda.addEventListener(new ModLog());
         } catch (LoginException e) {
+            e.printStackTrace();
             Main.exit(ExitStatus.INVALID_CONFIG);
         }
     }

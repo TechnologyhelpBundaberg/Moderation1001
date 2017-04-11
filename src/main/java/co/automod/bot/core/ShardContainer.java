@@ -51,7 +51,7 @@ public class ShardContainer {
                     .header("Content-Type", "application/json")
                     .asJson();
             return Integer.parseInt(request.getBody().getObject().get("shards").toString());
-        } catch (UnirestException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return 1;
