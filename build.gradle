@@ -15,7 +15,7 @@ repositories {
     maven { url 'https://jitpack.io' }
 }
 dependencies {
-    compile 'net.dv8tion:JDA:3.0.0_172'
+    compile 'net.dv8tion:JDA:3.0.0_173'
     compile 'com.github.kaaz:configurationbuilder:afbc25a5d2'
     compile group: 'com.rethinkdb', name: 'rethinkdb-driver', version: '2.3.3'
 }
