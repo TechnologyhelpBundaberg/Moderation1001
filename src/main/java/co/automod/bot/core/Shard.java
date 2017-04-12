@@ -23,6 +23,7 @@ public class Shard {
     private final ExecutorService commandExecutor;
     private final int shardId;
     private final int totShards;
+    private static JDA jda;
 
     Shard(ShardContainer container, int shardId, int totShards) {
         this.container = container;
@@ -39,7 +40,6 @@ public class Shard {
         if (totShards > 1) {
             builder.useSharding(shardId, totShards);
         }
-        JDA jda;
         try {
             jda = builder.buildBlocking();
             jda.setEventManager(new AnnotatedEventManager());
@@ -50,6 +50,10 @@ public class Shard {
             e.printStackTrace();
             Main.exit(ExitStatus.INVALID_CONFIG);
         }
+    }
+
+    public JDA getJda() {
+        return jda;
     }
 
     @SubscribeEvent

@@ -5,15 +5,12 @@ import com.rethinkdb.net.Connection;
 
 import static com.rethinkdb.RethinkDB.r;
 
-public class Rethonk {
+public class Rethink {
 
     private static Connection connection;
 
     public static void init() {
-        connection = r.connection().hostname(Config.rethink_host).port(Config.rethink_port).connect();
-        if (!(boolean) r.dbList().contains(Config.rethink_db_name).run(connection)) {
-            r.dbCreate(Config.rethink_db_name).run(connection);
-        }
+        connection = r.connection().hostname(Config.rethink_host).port(Config.rethink_port).db(Config.rethink_db_name).connect();
     }
 
     public static void createTable(String tableName) {

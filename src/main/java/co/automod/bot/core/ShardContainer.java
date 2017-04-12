@@ -39,6 +39,10 @@ public class ShardContainer {
         }
     }
 
+    public Shard[] getShards() {
+        return shards;
+    }
+
     /**
      * Retrieves the shard recommendation from discord
      *
