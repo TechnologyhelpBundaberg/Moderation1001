@@ -71,9 +71,11 @@ public class HelpCommand extends Command {
             if (set.isEmpty()) {
                 continue;
             }
+            sb.append(category.getEmote()).append(" **").append(category.getCategoryName()).append("**\n");
             for (String trigger : set) {
                 sb.append(String.format("[!%s](https://github.com/repulser/automod) - %s\n\n", trigger, CommandListener.commands.get(trigger).getDescription()));
             }
+            sb.append("\n");
         }
         fullHelpText = sb.toString();
     }
