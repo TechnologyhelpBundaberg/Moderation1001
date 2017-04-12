@@ -2,21 +2,48 @@ plugins {
     id 'java'
     id 'application'
     id 'com.github.johnrengelman.shadow' version '1.2.4'
+    id 'com.sedmelluq.jdaction' version '1.0.1'
 }
 
-mainClassName = 'co.automod.bot.Main'
 
-version '0.1'
+mainClassName = "co.automod.bot.Main"
+
+
+def ver = "1.0"
 
 sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
 repositories {
     jcenter()
     maven { url 'https://jitpack.io' }
 }
+
 dependencies {
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.0.pr2'
     compile 'net.dv8tion:JDA:3.0.0_175'
     compile 'com.github.kaaz:configurationbuilder:afbc25a5d2'
     compile group: 'com.rethinkdb', name: 'rethinkdb-driver', version: '2.3.3'
 }
-compileJava.options.encoding = 'UTF-8'
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '3.2'
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+build.dependsOn shadowJar
+
+artifacts {
+    archives shadowJar
+}
+
+jar {
+    classifier = "nodeps"
+}
+
+shadowJar {
+    classifier = ""
+}
