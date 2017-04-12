@@ -17,8 +17,8 @@ import java.util.HashMap;
 import java.util.Set;
 
 public class CommandListener {
-    private final static HashMap<String, Command> commands;
-    private final static HashMap<String, String> commandAliases;
+    public final static HashMap<String, Command> commands;
+    public final static HashMap<String, String> commandAliases;
 
     static {
         commands = new HashMap<>();

@@ -9,10 +9,20 @@ public abstract class Command {
     private CommandCategory category = CommandCategory.UNKNOWN;
 
     /**
+     * Decides if the command is listed in the help command
+     *
+     * @return boolean
+     */
+    public boolean isListed() {
+        return true;
+    }
+
+    /**
      * The trigger for this command (without prefix)
      *
      * @return trigger
      */
+
     public abstract String getTrigger();
 
     /**
