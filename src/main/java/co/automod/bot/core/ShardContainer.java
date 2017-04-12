@@ -21,11 +21,11 @@ public class ShardContainer {
 
     private void startShards() {
         for (int i = 0; i < shards.length; i++) {
-            shards[i] = new Shard(this);
+            shards[i] = new Shard(this,i, shards.length);
             boolean success = false;
             while (!success) {
                 try {
-                    shards[i].reboot(i, shards.length);
+                    shards[i].reboot();
                     success = true;
                     Thread.sleep(Config.SHARD_RATELIMIT);
                 } catch (RateLimitedException | InterruptedException e) {
