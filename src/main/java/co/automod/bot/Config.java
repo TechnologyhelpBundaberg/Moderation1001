@@ -8,6 +8,13 @@ public class Config {
     public static String discord_token = "your-discord-token";
 
     @ConfigurationOption
+    public static String rethink_host = "localhost";
+    @ConfigurationOption
+    public static int rethink_port = 28015;
+    @ConfigurationOption
+    public static String rethink_db_name = "automod";
+
+    @ConfigurationOption
     public static String command_prefix = "!";
     public final static long SHARD_RATELIMIT = 5_000L;
 }
