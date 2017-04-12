@@ -1,5 +1,6 @@
 package co.automod.bot.core;
 
+import com.rethinkdb.gen.exc.ReqlNonExistenceError;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageUpdateEvent;
@@ -9,6 +10,9 @@ import net.dv8tion.jda.core.utils.PermissionUtil;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static co.automod.bot.Main.conn;
+import static co.automod.bot.Main.r;
+
 public class AntiLink {
     private static final Pattern discordURL = Pattern.compile("discord\\.(?:me|io|gg)\\/.{0,4}\\w+|discordapp\\.com.{1,4}(?:invite|oauth2).{0,5}\\/");
     private final Permission[] ignoredPerms = {Permission.MANAGE_SERVER, Permission.MANAGE_ROLES};
@@ -17,11 +21,18 @@ public class AntiLink {
     @SubscribeEvent
     public void handleEdit(GuildMessageUpdateEvent e) {
         if (e.getAuthor().getId().equals(e.getJDA().getSelfUser().getId())) return;
-        //Check if guild is in db and anti link is enabled.
+        boolean enabled;
+        try {
+            enabled = r.table("antilink").get(e.getGuild().getId()).getField("bool").run(conn);
+        } catch (ReqlNonExistenceError ignored) {
+            enabled = false;
+        }
+        if (!enabled) return;
         boolean hasPerms = PermissionUtil.checkPermission(e.getGuild(), e.getMember(), ignoredPerms);
         if (hasPerms) return;
         String content = e.getMessage().getRawContent();
         content = content.replaceAll("\\p{C}", "");
+        content = content.replace(" ", "");
         if (!content.contains("discord")) return;
         Matcher m = discordURL.matcher(content);
         if (m.find()) {
@@ -32,11 +43,18 @@ public class AntiLink {
     @SubscribeEvent
     public void handleMessage(GuildMessageReceivedEvent e) {
         if (e.getAuthor().getId().equals(e.getJDA().getSelfUser().getId())) return;
-        //Check if guild is in db and anti link is enabled.
+        boolean enabled;
+        try {
+            enabled = r.table("antilink").get(e.getGuild().getId()).getField("bool").run(conn);
+        } catch (ReqlNonExistenceError ignored) {
+            enabled = false;
+        }
+        if (!enabled) return;
         boolean hasPerms = PermissionUtil.checkPermission(e.getGuild(), e.getMember(), ignoredPerms);
         if (hasPerms) return;
         String content = e.getMessage().getRawContent();
         content = content.replaceAll("\\p{C}", "");
+        content = content.replace(" ", "");
         if (!content.contains("discord")) return;
         Matcher m = discordURL.matcher(content);
         if (m.find()) {

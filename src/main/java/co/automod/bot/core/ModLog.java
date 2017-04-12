@@ -2,6 +2,7 @@ package co.automod.bot.core;
 
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
+import com.rethinkdb.gen.exc.ReqlNonExistenceError;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.TextChannel;
@@ -41,7 +42,13 @@ public class ModLog {
 
     @SubscribeEvent
     public void onDelete(GuildMessageDeleteEvent e) {
-        String tempChannel = r.table("modlog").get(e.getGuild().getId()).getField("channelId").run(conn);
+        String tempChannel;
+        try {
+            tempChannel = r.table("modlog").get(e.getGuild().getId()).getField("channelId").run(conn);
+
+        } catch (ReqlNonExistenceError ignored) {
+            return;
+        }
         if (tempChannel == null) return;
         TextChannel channel = e.getJDA().getTextChannelById(tempChannel);
         if (channel == null) {
@@ -75,7 +82,13 @@ public class ModLog {
 
     @SubscribeEvent
     public void onEdit(GuildMessageUpdateEvent e) {
-        String tempChannel = r.table("modlog").get(e.getGuild().getId()).getField("channelId").run(conn);
+        String tempChannel;
+        try {
+            tempChannel = r.table("modlog").get(e.getGuild().getId()).getField("channelId").run(conn);
+
+        } catch (ReqlNonExistenceError ignored) {
+            return;
+        }
         if (tempChannel == null) return;
         TextChannel channel = e.getJDA().getTextChannelById(tempChannel);
         if (channel == null) {
@@ -102,7 +115,13 @@ public class ModLog {
 
     @SubscribeEvent
     public void onLeave(GuildMemberLeaveEvent e) {
-        String tempChannel = r.table("modlog").get(e.getGuild().getId()).getField("channelId").run(conn);
+        String tempChannel;
+        try {
+            tempChannel = r.table("modlog").get(e.getGuild().getId()).getField("channelId").run(conn);
+
+        } catch (ReqlNonExistenceError ignored) {
+            return;
+        }
         if (tempChannel == null) return;
         TextChannel channel = e.getJDA().getTextChannelById(tempChannel);
         if (channel == null) {
@@ -119,7 +138,13 @@ public class ModLog {
 
     @SubscribeEvent
     public void onJoin(GuildMemberJoinEvent e) {
-        String tempChannel = r.table("modlog").get(e.getGuild().getId()).getField("channelId").run(conn);
+        String tempChannel;
+        try {
+            tempChannel = r.table("modlog").get(e.getGuild().getId()).getField("channelId").run(conn);
+
+        } catch (ReqlNonExistenceError ignored) {
+            return;
+        }
         if (tempChannel == null) return;
         TextChannel channel = e.getJDA().getTextChannelById(tempChannel);
         if (channel == null) {
@@ -138,7 +163,13 @@ public class ModLog {
 
     @SubscribeEvent
     public void onBan(GuildBanEvent e) {
-        String tempChannel = r.table("modlog").get(e.getGuild().getId()).getField("channelId").run(conn);
+        String tempChannel;
+        try {
+            tempChannel = r.table("modlog").get(e.getGuild().getId()).getField("channelId").run(conn);
+
+        } catch (ReqlNonExistenceError ignored) {
+            return;
+        }
         if (tempChannel == null) return;
         TextChannel channel = e.getJDA().getTextChannelById(tempChannel);
         if (channel == null) {
@@ -156,7 +187,13 @@ public class ModLog {
 
     @SubscribeEvent
     public void onNickChange(GuildMemberNickChangeEvent e) {
-        String tempChannel = r.table("modlog").get(e.getGuild().getId()).getField("channelId").run(conn);
+        String tempChannel;
+        try {
+            tempChannel = r.table("modlog").get(e.getGuild().getId()).getField("channelId").run(conn);
+
+        } catch (ReqlNonExistenceError ignored) {
+            return;
+        }
         if (tempChannel == null) return;
         TextChannel channel = e.getJDA().getTextChannelById(tempChannel);
         if (channel == null) {
@@ -173,7 +210,13 @@ public class ModLog {
 
     @SubscribeEvent
     public void roleAdd(GuildMemberRoleAddEvent e) {
-        String tempChannel = r.table("modlog").get(e.getGuild().getId()).getField("channelId").run(conn);
+        String tempChannel;
+        try {
+            tempChannel = r.table("modlog").get(e.getGuild().getId()).getField("channelId").run(conn);
+
+        } catch (ReqlNonExistenceError ignored) {
+            return;
+        }
         if (tempChannel == null) return;
         TextChannel channel = e.getJDA().getTextChannelById(tempChannel);
         if (channel == null) {
@@ -191,7 +234,13 @@ public class ModLog {
 
     @SubscribeEvent
     public void roleRemove(GuildMemberRoleRemoveEvent e) {
-        String tempChannel = r.table("modlog").get(e.getGuild().getId()).getField("channelId").run(conn);
+        String tempChannel;
+        try {
+            tempChannel = r.table("modlog").get(e.getGuild().getId()).getField("channelId").run(conn);
+
+        } catch (ReqlNonExistenceError ignored) {
+            return;
+        }
         if (tempChannel == null) return;
         TextChannel channel = e.getJDA().getTextChannelById(tempChannel);
         if (channel == null) {
