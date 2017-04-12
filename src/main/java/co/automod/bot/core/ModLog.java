@@ -181,7 +181,7 @@ public class ModLog {
         String time = dateFormat.format(new Date());
         User author = e.getUser();
         String user = author.getName() + "#" + author.getDiscriminator();
-        channel.sendMessage(String.format("\uD83D\uDD28 `[%s]` **%s** has been banned. Total members `%s`", time, user, e.getGuild().getMembers().size())).queue(msg -> SelfCache.put(msg.getId(), Optional.of(msg.getRawContent())));
+        channel.sendMessage(String.format("\uD83D\uDD28 `[%s]` **%s**(%s) has been banned. Total members `%s`", time, user, author.getId(), e.getGuild().getMembers().size())).queue(msg -> SelfCache.put(msg.getId(), Optional.of(msg.getRawContent())));
 
     }
 
