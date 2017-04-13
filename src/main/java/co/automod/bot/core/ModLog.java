@@ -9,6 +9,7 @@ import net.dv8tion.jda.core.events.guild.member.*;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageDeleteEvent;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageUpdateEvent;
+import net.dv8tion.jda.core.events.user.UserNameUpdateEvent;
 import net.dv8tion.jda.core.hooks.SubscribeEvent;
 
 import java.text.DateFormat;
@@ -16,6 +17,7 @@ import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.OffsetDateTime;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
@@ -192,7 +194,7 @@ public class ModLog {
         String time = getTime();
         Member author = e.getMember();
         String user = getUser(author);
-        channel.sendMessage(String.format("\u2705 `[%s]` **%s** Changed his name\n\nBefore: `%s`\n\nAfter: `%s`", time, user, e.getPrevNick() == null ? e.getMember().getUser().getName() : e.getPrevNick(), e.getNewNick() == null ? e.getMember().getUser().getName() : e.getNewNick())).queue(msg -> SelfCache.put(msg.getId(), Optional.of(msg.getRawContent())));
+        channel.sendMessage(String.format("\uD83C\uDFF7 `[%s]` **%s** Changed their nickname `%s` ➥ `%s`", time, user, e.getPrevNick() == null ? e.getMember().getUser().getName() : e.getPrevNick(), e.getNewNick() == null ? e.getMember().getUser().getName() : e.getNewNick())).queue(msg -> SelfCache.put(msg.getId(), Optional.of(msg.getRawContent())));
     }
 
     @SubscribeEvent
@@ -231,5 +233,23 @@ public class ModLog {
         channel.sendMessage(String.format("\u274C `[%s]` a role has been removed from **%s** - `%s`", time, user, AddedRoles)).queue(msg -> SelfCache.put(msg.getId(), Optional.of(msg.getRawContent())));
     }
 
+    @SubscribeEvent
+    public void usernameUpdate(UserNameUpdateEvent e) {
+        String before = e.getOldName() + "#" + e.getOldDiscriminator();
+        String after = e.getUser().getName() + "#" + e.getUser().getDiscriminator();
+        List<Guild> userGuilds = e.getJDA().getGuilds().stream().filter(g -> g.getMembers().stream().map(Member::getUser).collect(Collectors.toList()).contains(e.getUser())).collect(Collectors.toList());
+        for (Guild guild : userGuilds) {
+            String tempChannel = getChannel(guild);
+            if (tempChannel == null) return;
+            TextChannel channel = e.getJDA().getTextChannelById(tempChannel);
+            if (channel == null) {
+                System.out.println("Could not find channel for id " + tempChannel);
+                deleteGuild(guild);
+                return;
+            }
+            String time = getTime();
+            channel.sendMessage(String.format("\uD83C\uDFF7 `[%s]` **%s** Changed their username `%s` ➥ `%s`", time, before, before, after)).queue(msg -> SelfCache.put(msg.getId(), Optional.of(msg.getRawContent())));
+        }
+    }
 
 }

@@ -50,6 +50,8 @@ public class ModLogCommand extends Command {
         if (args.equalsIgnoreCase("off") || args.equalsIgnoreCase("disable") || args.equalsIgnoreCase("false")) {
             try {
                 deleteGuild(message.getGuild());
+                channel.sendMessage("\u2705 **Disabled modlog**").queue();
+                return;
             } catch (ReqlNonExistenceError ignored) {
                 channel.sendMessage("\u274C **Mod Log is not set**").queue();
                 return;
