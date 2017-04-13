@@ -12,7 +12,7 @@ public class BanCommand extends ModAction {
 
     @Override
     boolean doModAction(Guild guild, Member member) {
-        guild.getController().ban(member, 7).complete();
+        guild.getController().ban(member, 0).complete();
         return true;
     }
 
