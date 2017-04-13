@@ -17,7 +17,7 @@ import static co.automod.bot.Main.conn;
 import static co.automod.bot.Main.r;
 
 public class AntiLink {
-    private static final Pattern discordURL = Pattern.compile("discord\\.(?:me|io|gg)\\/.{0,4}\\w+|discordapp\\.com.{1,4}(?:invite|oauth2).{0,5}\\/");
+    private static final Pattern discordURL = Pattern.compile("discord(?:(\\.(?:me|io|gg)|sites\\.com)\\/.{0,4}|app\\.com.{1,4}(?:invite|oauth2).{0,5}\\/)\\w+");
     private final Permission[] ignoredPerms = {Permission.MANAGE_SERVER, Permission.MANAGE_ROLES};
 
     private Boolean enabled(Guild guild) {

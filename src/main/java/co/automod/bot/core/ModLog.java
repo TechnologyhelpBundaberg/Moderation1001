@@ -24,7 +24,6 @@ import static co.automod.bot.Main.conn;
 import static co.automod.bot.Main.r;
 
 public class ModLog {
-    //Temp channel for testing
     private final DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
     private final Cache<String, Optional<Message>> MessageCache = CacheBuilder.newBuilder().concurrencyLevel(10).maximumSize(2500).build();
     private final Cache<String, Optional<String>> SelfCache = CacheBuilder.newBuilder().concurrencyLevel(10).maximumSize(2500).build();
@@ -47,7 +46,6 @@ public class ModLog {
     }
 
     private void deleteGuild(Guild guild) {
-
         r.table("modlog").get(guild.getId()).delete().runNoReply(conn);
     }
 
@@ -91,10 +89,17 @@ public class ModLog {
         Message DeletedMessage;
         DeletedMessage = getFromCache(e.getMessageId());
         if (DeletedMessage == null) return;
+        String content = DeletedMessage.getStrippedContent();
+        if (!content.isEmpty() && !DeletedMessage.getAttachments().isEmpty()) {
+            content += String.join(", ", DeletedMessage.getAttachments().stream().map(Message.Attachment::getUrl).collect(Collectors.toList()));
+        } else if (content.isEmpty()) {
+            if (DeletedMessage.getAttachments().isEmpty()) return;
+            content = String.join(", ", DeletedMessage.getAttachments().stream().map(Message.Attachment::getUrl).collect(Collectors.toList()));
+        }
         String time = getTime();
         Member author = DeletedMessage.getGuild().getMember(DeletedMessage.getAuthor());
         String user = getUser(author);
-        channel.sendMessage(String.format("\uD83D\uDCDD `[%s]` %s **%s's** message has been deleted `%s`", time, e.getChannel().getAsMention(), user, DeletedMessage.getStrippedContent())).queue(msg -> SelfCache.put(msg.getId(), Optional.of(msg.getRawContent())));
+        channel.sendMessage(String.format("\uD83D\uDCDD `[%s]` %s **%s's** message has been deleted `%s`", time, e.getChannel().getAsMention(), user, content)).queue(msg -> SelfCache.put(msg.getId(), Optional.of(msg.getRawContent())));
     }
 
     @SubscribeEvent
@@ -109,6 +114,7 @@ public class ModLog {
         }
         if (!e.getGuild().getId().equals(channel.getGuild().getId())) return;
         Message after = e.getMessage();
+        if (after == null) return;
         Message before = getFromCache(after.getId());
         if (before == null) return;
         String time = getTime();

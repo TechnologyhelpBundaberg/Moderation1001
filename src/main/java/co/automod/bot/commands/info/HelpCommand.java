@@ -1,8 +1,8 @@
 package co.automod.bot.commands.info;
 
+import co.automod.bot.commands.CommandCategory;
 import co.automod.bot.core.listener.CommandListener;
 import co.automod.bot.core.listener.command.Command;
-import co.automod.bot.commands.CommandCategory;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.Message;
@@ -55,7 +55,6 @@ public class HelpCommand extends Command {
         StringBuilder sb = new StringBuilder();
         HashMap<CommandCategory, TreeSet<String>> cmds = new HashMap<>();
         for (Map.Entry<String, Command> entry : CommandListener.commands.entrySet()) {
-            String key = entry.getKey();
             Command value = entry.getValue();
             if (!value.isListed()) continue;
             if (!cmds.containsKey(value.getCategory())) {
