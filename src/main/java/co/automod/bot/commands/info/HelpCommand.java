@@ -48,7 +48,7 @@ public class HelpCommand extends Command {
                 .setAuthor("AutoMod Commands!", null, channel.getJDA().getSelfUser().getAvatarUrl())
                 .setDescription(fullHelpText)
                 .setFooter("AutoMod ready at your command!", null)
-                .build()).queue());
+                .build()).queue(p -> channel.sendMessage("\u2705 **Help sent in DM`s**").queue()));
     }
 
     private void createHelpCache() {
