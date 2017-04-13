@@ -110,7 +110,7 @@ public class ModLog {
         if (!e.getGuild().getId().equals(channel.getGuild().getId())) return;
         Message after = e.getMessage();
         Message before = getFromCache(after.getId());
-        if (before == null || after == null) return;
+        if (before == null) return;
         String time = getTime();
         Member author = before.getGuild().getMember(before.getAuthor());
         String user = getUser(author);
@@ -203,7 +203,7 @@ public class ModLog {
         String time = getTime();
         Member author = e.getMember();
         String user = getUser(author);
-        String AddedRoles = String.join(", ", e.getRoles().stream().map(r -> r.getName()).collect(Collectors.toList()));
+        String AddedRoles = String.join(", ", e.getRoles().stream().map(Role::getName).collect(Collectors.toList()));
         channel.sendMessage(String.format("\u2611 `[%s]` a role has been added to **%s** - `%s`", time, user, AddedRoles)).queue(msg -> SelfCache.put(msg.getId(), Optional.of(msg.getRawContent())));
     }
 
@@ -221,7 +221,7 @@ public class ModLog {
         String time = getTime();
         Member author = e.getMember();
         String user = getUser(author);
-        String AddedRoles = String.join(", ", e.getRoles().stream().map(r -> r.getName()).collect(Collectors.toList()));
+        String AddedRoles = String.join(", ", e.getRoles().stream().map(Role::getName).collect(Collectors.toList()));
         channel.sendMessage(String.format("\u274C `[%s]` a role has been removed from **%s** - `%s`", time, user, AddedRoles)).queue(msg -> SelfCache.put(msg.getId(), Optional.of(msg.getRawContent())));
     }
 
