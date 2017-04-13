@@ -5,9 +5,11 @@ import co.automod.bot.ExitStatus;
 import co.automod.bot.Main;
 import co.automod.bot.core.listener.CommandListener;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
+import com.rethinkdb.gen.exc.ReqlNonExistenceError;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.JDABuilder;
+import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.core.exceptions.RateLimitedException;
 import net.dv8tion.jda.core.hooks.AnnotatedEventManager;
@@ -16,6 +18,9 @@ import net.dv8tion.jda.core.hooks.SubscribeEvent;
 import javax.security.auth.login.LoginException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
+import static co.automod.bot.Main.conn;
+import static co.automod.bot.Main.r;
 
 public class Shard {
     private final ShardContainer container;
@@ -56,16 +61,33 @@ public class Shard {
         return jda;
     }
 
+    public static String getPrefix(Guild guild) {
+        if (guild == null) {
+            return Config.default_command_prefix;
+        }
+        try {
+            return r.table("prefixes").get(guild.getId()).getField("prefix").run(conn);
+
+        } catch (ReqlNonExistenceError ignored) {
+            return Config.default_command_prefix;
+        }
+    }
+
     @SubscribeEvent
     public void onGuildMessageReceived(GuildMessageReceivedEvent e) {
         if (e.getAuthor().isBot()) {
             return;
         }
-        commandExecutor.submit(() -> {
-            if (!commandListener.isCommand(e.getMessage().getContent())) {
-                return;
+        String prefix = getPrefix(e.getGuild());
+        if (!commandListener.isCommand(e.getMessage().getContent(), prefix)) {
+            //Send the servers prefix
+            if (e.getMessage().getRawContent().equalsIgnoreCase(e.getJDA().getSelfUser().getAsMention())) {
+                e.getChannel().sendMessage("**My prefix here is `" + getPrefix(e.getGuild()) + "`**").queue();
             }
-            commandListener.execute(e.getGuild(), e.getChannel(), e.getAuthor(), e.getMessage());
+            return;
+        }
+        commandExecutor.submit(() -> {
+            commandListener.execute(e.getGuild(), e.getChannel(), e.getAuthor(), e.getMessage(), prefix);
         });
     }
 }

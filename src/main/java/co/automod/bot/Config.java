@@ -15,6 +15,6 @@ public class Config {
     public static String rethink_db_name = "automod";
 
     @ConfigurationOption
-    public static String command_prefix = "!";
+    public static String default_command_prefix = "!";
     public final static long SHARD_RATELIMIT = 5_000L;
 }

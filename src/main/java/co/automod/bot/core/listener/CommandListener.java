@@ -26,15 +26,15 @@ public class CommandListener {
         collectCommands();
     }
 
-    public boolean isCommand(String input) {
-        if (input == null || !input.startsWith(Config.command_prefix)) {
+    public boolean isCommand(String input, String prefix) {
+        if (input == null || !input.startsWith(prefix)) {
             return false;
         }
         String[] split = input.split(" ", 2);
-        if (split[0].length() <= Config.command_prefix.length()) {
+        if (split[0].length() <= prefix.length()) {
             return false;
         }
-        String cmd = split[0].substring(Config.command_prefix.length());
+        String cmd = split[0].substring(prefix.length());
         return getCommand(cmd) != null;
     }
 
@@ -88,12 +88,12 @@ public class CommandListener {
      * @param message the mesage
      * @return successfully executed?
      */
-    public boolean execute(Guild guild, TextChannel channel, User author, Message message) {
+    public boolean execute(Guild guild, TextChannel channel, User author, Message message, String prefix) {
         String[] split = message.getContent().split(" ", 2);
-        if (split[0].length() <= Config.command_prefix.length()) {
+        if (split[0].length() <= prefix.length()) {
             return false;
         }
-        String cmd = split[0].substring(Config.command_prefix.length());
+        String cmd = split[0].substring(prefix.length());
         Command command = getCommand(cmd);
         if (command == null) {
             return false;
