@@ -115,7 +115,7 @@ public class CommandListener {
      * @return successfully executed?
      */
     public boolean execute(Guild guild, TextChannel channel, User author, Message message, String prefix) {
-        String[] split = message.getContent().split(" ", 2);
+        String[] split = message.getRawContent().split(" ", 2);
         if (split[0].length() <= prefix.length()) {
             return false;
         }

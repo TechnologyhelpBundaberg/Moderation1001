@@ -17,11 +17,11 @@ public abstract class ModAction extends Command {
     public void execute(Guild guild, TextChannel channel, User invoker, Message message, String args) {
         if (getRequiredPermission() != null) {
             if (!PermissionUtil.checkPermission(guild, guild.getMember(invoker), getRequiredPermission())) {
-                channel.sendMessage(String.format("You have no permission to %s. You need the %s permission node", getTrigger(), getRequiredPermission()));
+                channel.sendMessage(String.format("You have no permission to %s. You need the %s permission node", getTrigger(), getRequiredPermission())).queue();
                 return;
             }
             if (!PermissionUtil.checkPermission(guild, guild.getSelfMember(), getRequiredPermission())) {
-                channel.sendMessage("I have no permission to %s users. I need the %s permission", getTrigger(), getRequiredPermission());
+                channel.sendMessage("I have no permission to %s users. I need the %s permission", getTrigger(), getRequiredPermission()).queue();
                 return;
             }
         }
