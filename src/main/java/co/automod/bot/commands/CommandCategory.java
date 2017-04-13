@@ -1,7 +1,9 @@
-package co.automod.bot.core.listener.command;
+package co.automod.bot.commands;
 
 public enum CommandCategory {
     INFORMATIVE("info", "\u2139", "Information"),
+    CONFIGURATION("config", "\u2699\ufe0f", "Configuration"),
+    ADMINISTRATIVE("admin", "\uD83D\uDC6E", "Administration"),
     UNKNOWN("?", "\u2753", "Unknown"),;
 
     private final String packageName;

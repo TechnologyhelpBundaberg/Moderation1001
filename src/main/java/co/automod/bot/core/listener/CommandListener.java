@@ -4,7 +4,7 @@ import co.automod.bot.Config;
 import co.automod.bot.ExitStatus;
 import co.automod.bot.Main;
 import co.automod.bot.core.listener.command.Command;
-import co.automod.bot.core.listener.command.CommandCategory;
+import co.automod.bot.commands.CommandCategory;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.TextChannel;

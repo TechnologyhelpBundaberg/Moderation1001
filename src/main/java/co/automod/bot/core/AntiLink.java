@@ -21,13 +21,11 @@ public class AntiLink {
     private final Permission[] ignoredPerms = {Permission.MANAGE_SERVER, Permission.MANAGE_ROLES};
 
     private Boolean enabled(Guild guild) {
-        boolean enabled;
         try {
-            enabled = r.table("antilink").get(guild.getId()).getField("bool").run(conn);
+            return r.table("antilink").get(guild.getId()).getField("bool").run(conn);
         } catch (ReqlNonExistenceError ignored) {
-            enabled = false;
         }
-        return enabled;
+        return false;
     }
 
     private String cleanString(String input) {

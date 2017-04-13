@@ -1,5 +1,6 @@
 package co.automod.bot.core.listener.command;
 
+import co.automod.bot.commands.CommandCategory;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.TextChannel;

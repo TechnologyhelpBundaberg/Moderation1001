@@ -2,7 +2,7 @@ package co.automod.bot.commands.info;
 
 import co.automod.bot.core.listener.CommandListener;
 import co.automod.bot.core.listener.command.Command;
-import co.automod.bot.core.listener.command.CommandCategory;
+import co.automod.bot.commands.CommandCategory;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.Message;
