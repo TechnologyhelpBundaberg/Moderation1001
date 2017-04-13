@@ -1,8 +1,7 @@
 package co.automod.bot.commands.config;
 
-import co.automod.bot.core.Shard;
+import co.automod.bot.core.listener.CommandListener;
 import co.automod.bot.core.listener.command.Command;
-import co.automod.bot.data.GuildChannel;
 import co.automod.bot.data.GuildPrefix;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
@@ -44,10 +43,11 @@ public class ServerPrefixCommand extends Command {
         boolean hasPerms = PermissionUtil.checkPermission(guild, guild.getMember(invoker), Permission.MANAGE_SERVER);
         if (!hasPerms) return;
         if (args.isEmpty()) {
-            channel.sendMessage(new EmbedBuilder().setColor(Color.red).setDescription(String.format("**\u274C Missing args**\n\n%sserverprefix [Prefix]", Shard.getPrefix(guild))).build()).queue();
+            channel.sendMessage(new EmbedBuilder().setColor(Color.red).setDescription(String.format("**\u274C Missing args**\n\n%sserverprefix [Prefix]", CommandListener.getPrefix(guild))).build()).queue();
             return;
         }
         String prefix = args.replace(" ", "");
+        CommandListener.forgetGuild(guild);
         r.table("prefixes").insert(new GuildPrefix(guild.getId(), prefix)).optArg("conflict", "replace").runNoReply(conn);
         channel.sendMessage("\u2705 **Set the prefix to `" + prefix + "`**").queue();
     }

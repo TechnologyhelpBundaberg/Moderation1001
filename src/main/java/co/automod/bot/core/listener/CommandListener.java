@@ -5,6 +5,7 @@ import co.automod.bot.ExitStatus;
 import co.automod.bot.Main;
 import co.automod.bot.core.listener.command.Command;
 import co.automod.bot.commands.CommandCategory;
+import com.rethinkdb.gen.exc.ReqlNonExistenceError;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.TextChannel;
@@ -15,15 +16,40 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Modifier;
 import java.util.HashMap;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+
+import static co.automod.bot.Main.conn;
+import static co.automod.bot.Main.r;
 
 public class CommandListener {
     public final static HashMap<String, Command> commands;
     public final static HashMap<String, String> commandAliases;
+    private static final ConcurrentHashMap<Long, String> prefixes = new ConcurrentHashMap<>();
 
     static {
         commands = new HashMap<>();
         commandAliases = new HashMap<>();
         collectCommands();
+    }
+
+    public static void forgetGuild(Guild guild){
+        prefixes.remove(guild.getIdLong());
+    }
+
+    public static String getPrefix(Guild guild) {
+        if (guild == null) {
+            return Config.default_command_prefix;
+        }
+        if (!prefixes.containsKey(guild.getIdLong())) {
+
+            try {
+                prefixes.put(guild.getIdLong(), r.table("prefixes").get(guild.getId()).getField("prefix").run(conn));
+
+            } catch (ReqlNonExistenceError ignored) {
+                prefixes.put(guild.getIdLong(), Config.default_command_prefix);
+            }
+        }
+        return prefixes.get(guild.getIdLong());
     }
 
     public boolean isCommand(String input, String prefix) {
