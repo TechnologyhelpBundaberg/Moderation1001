@@ -32,7 +32,7 @@ public class CommandListener {
         collectCommands();
     }
 
-    public static void forgetGuild(Guild guild){
+    public static void forgetGuild(Guild guild) {
         prefixes.remove(guild.getIdLong());
     }
 
