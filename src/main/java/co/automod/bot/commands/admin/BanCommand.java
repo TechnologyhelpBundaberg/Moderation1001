@@ -7,7 +7,7 @@ import net.dv8tion.jda.core.entities.Member;
 public class BanCommand extends ModAction {
     @Override
     Permission getRequiredPermission() {
-        return Permission.KICK_MEMBERS;
+        return Permission.BAN_MEMBERS;
     }
 
     @Override
