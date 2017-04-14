@@ -26,7 +26,7 @@ public class AntiLinkCommand extends Command {
 
     @Override
     public String getDescription() {
-        return "Toggle anti link setting.";
+        return "Toggle Anti Link setting, deletes invite links to avoid advertising.";
     }
 
     @Override
