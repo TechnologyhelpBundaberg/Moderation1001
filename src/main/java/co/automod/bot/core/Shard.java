@@ -44,7 +44,7 @@ public class Shard {
             jda = builder.buildBlocking();
             jda.setEventManager(new AnnotatedEventManager());
             jda.addEventListener(new ModLog());
-            jda.addEventListener(new Automod());
+            jda.addEventListener(new AntiLink());
             jda.addEventListener(this);
         } catch (LoginException e) {
             e.printStackTrace();

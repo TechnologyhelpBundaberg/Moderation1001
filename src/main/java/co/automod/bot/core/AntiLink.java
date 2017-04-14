@@ -1,6 +1,5 @@
 package co.automod.bot.core;
 
-import com.rethinkdb.gen.exc.ReqlNonExistenceError;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.Member;
@@ -14,19 +13,12 @@ import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static co.automod.bot.core.Rethink.connection;
-import static co.automod.bot.core.Rethink.r;
-
-public class Automod {
+public class AntiLink {
     private static final Pattern discordURL = Pattern.compile("discord(?:(\\.(?:me|io|gg)|sites\\.com)\\/.{0,4}|app\\.com.{1,4}(?:invite|oauth2).{0,5}\\/)\\w+");
     private final Permission[] ignoredPerms = {Permission.MANAGE_SERVER, Permission.MANAGE_ROLES, Permission.BAN_MEMBERS, Permission.KICK_MEMBERS};
 
     private Boolean enabled(Guild guild) {
-        try {
-            return r.table("antilink").get(guild.getId()).getField("bool").run(connection);
-        } catch (ReqlNonExistenceError ignored) {
-        }
-        return false;
+        return Settings.getSetting(guild).antilink;
     }
 
     private String cleanString(String input) {
@@ -36,9 +28,6 @@ public class Automod {
     }
 
     private boolean ignoreMember(Member member) {
-        if (member.getUser().getIdLong() == 97433066384928768L) {
-            return false;
-        }
         return Arrays.stream(ignoredPerms).anyMatch(perm -> PermissionUtil.checkPermission(member.getGuild(), member, perm));
     }
 
