@@ -31,7 +31,7 @@ public abstract class ModAction extends Command {
         }
         User targetUser = Misc.findUser(channel, args);
         if (targetUser == null) {
-            channel.sendMessage(String.format("Can't find **%s**! I guess he's pretty good at hide & seek..", args)).queue();
+            channel.sendMessage(String.format("Can't find **%s**! I guess he's pretty good at hide & seek.. \uD83D\uDC40", args)).queue();
             return;
         }
         if (targetUser.getIdLong() == guild.getJDA().getSelfUser().getIdLong()) {
