@@ -17,20 +17,21 @@ public abstract class ModAction extends Command {
     public void execute(Guild guild, TextChannel channel, User invoker, Message message, String args) {
         if (getRequiredPermission() != null) {
             if (!PermissionUtil.checkPermission(guild, guild.getMember(invoker), getRequiredPermission())) {
-                channel.sendMessage(String.format("It seems like yoou don't have the permission to %s! Make sure that you have the **`%s`** permission node.", getTrigger(), getRequiredPermission())).queue();
+                channel.sendMessage(String.format("\u274C| It seems like you don't have the `%s` permission! **Make sure that you have the `%s` permission.**", getTrigger(), getRequiredPermission())).queue();
                 return;
             }
             if (!PermissionUtil.checkPermission(guild, guild.getSelfMember(), getRequiredPermission())) {
-                channel.sendMessage("I am not allowed to %s members! Make sure that I have the **`%s`** permission.", getTrigger(), getRequiredPermission()).queue();
+                channel.sendMessage("\u274C| **I am not allowed** to %s members! Make sure that I have the **`%s`** permission.", getTrigger(), getRequiredPermission()).queue();
                 return;
             }
         }
         if (args.isEmpty()) {
-            channel.sendMessage(String.format("Who exactly should I %s?", getTrigger())).queue();
+            channel.sendMessage(String.format("\u2753| **Who exactly should I %s?**", getTrigger())).queue();
             return;
         }
         User targetUser = Misc.findUser(channel, args);
         if (targetUser == null) {
+            channel.sendMessage(String.format("Can't find **%s**! I guess he's pretty good at hide & seek..", args)).queue();
             return;
         }
         if (targetUser.getIdLong() == guild.getJDA().getSelfUser().getIdLong()) {
@@ -38,7 +39,7 @@ public abstract class ModAction extends Command {
             return;
         }
         if (targetUser.getIdLong() == invoker.getIdLong()) {
-            channel.sendMessage(String.format("Owwwh... Don't be so hard on yourself! \uD83D\uDC96 \u2728 ", getTrigger())).queue();
+            channel.sendMessage(String.format("Don't be so hard on yourself! \uD83D\uDC96 \u2728 ", getTrigger())).queue();
             return;
         }
         if (!PermissionUtil.canInteract(guild.getSelfMember(), guild.getMember(targetUser))) {
@@ -46,7 +47,7 @@ public abstract class ModAction extends Command {
             return;
         }
         if (doModAction(guild, guild.getMember(targetUser))) {
-            channel.sendMessage(String.format("%s is gone! \uD83D\uDD28",targetUser.getName()).queue();
+            channel.sendMessage(String.format("%s| **%s** is gone!", getTrigger().equals("kick") ? "\uD83D\uDC62" : "\uD83D\uDD28", targetUser.getName() + "#" + targetUser.getDiscriminator())).queue();
             return;
         }
         channel.sendMessage("Failed to %s %s. Sad isn't it?", getTrigger(), targetUser.getName());
