@@ -3,11 +3,14 @@ package co.automod.bot.commands.info;
 import co.automod.bot.commands.CommandCategory;
 import co.automod.bot.core.listener.CommandListener;
 import co.automod.bot.core.listener.command.Command;
+import co.automod.bot.util.Emoji;
 import net.dv8tion.jda.core.EmbedBuilder;
+import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
+import net.dv8tion.jda.core.utils.PermissionUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -46,9 +49,12 @@ public class HelpCommand extends Command {
         }
         invoker.openPrivateChannel().queue(privateChannel -> privateChannel.sendMessage(new EmbedBuilder()
                 .setAuthor("AutoMod Commands!", null, channel.getJDA().getSelfUser().getAvatarUrl())
-                .setDescription(fullHelpText)
+                .setDescription(String.format(fullHelpText, CommandListener.getPrefix(guild)))
                 .setFooter("AutoMod ready at your command!", null)
                 .build()).queue());
+        if (PermissionUtil.checkPermission(channel, guild.getSelfMember(), Permission.MESSAGE_ADD_REACTION)) {
+            message.addReaction(Emoji.MAILBOX_WITH_MAIL).queue();
+        }
     }
 
     private void createHelpCache() {
@@ -72,7 +78,7 @@ public class HelpCommand extends Command {
             }
             sb.append(category.getEmote()).append(" **").append(category.getCategoryName()).append("**\n");
             for (String trigger : set) {
-                sb.append(String.format("[!%s](https://github.com/repulser/automod) - %s\n\n", trigger, CommandListener.commands.get(trigger).getDescription()));
+                sb.append(String.format("[%s%s](https://github.com/repulser/automod) - %s\n", "%1$s", trigger, CommandListener.commands.get(trigger).getDescription()));
             }
             sb.append("\n");
         }
