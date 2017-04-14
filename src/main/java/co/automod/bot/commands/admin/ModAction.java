@@ -17,11 +17,11 @@ public abstract class ModAction extends Command {
     public void execute(Guild guild, TextChannel channel, User invoker, Message message, String args) {
         if (getRequiredPermission() != null) {
             if (!PermissionUtil.checkPermission(guild, guild.getMember(invoker), getRequiredPermission())) {
-                channel.sendMessage(String.format("You have no permission to %s. You need the %s permission node", getTrigger(), getRequiredPermission())).queue();
+                channel.sendMessage(String.format("You have no permission to %s. You need the %s permission node.", getTrigger(), getRequiredPermission())).queue();
                 return;
             }
             if (!PermissionUtil.checkPermission(guild, guild.getSelfMember(), getRequiredPermission())) {
-                channel.sendMessage("I have no permission to %s users. I need the %s permission", getTrigger(), getRequiredPermission()).queue();
+                channel.sendMessage("I have no permission to %s users. I need the %s permission.", getTrigger(), getRequiredPermission()).queue();
                 return;
             }
         }
@@ -31,21 +31,21 @@ public abstract class ModAction extends Command {
         }
         User targetUser = Misc.findUser(channel, args);
         if (targetUser == null) {
-            channel.sendMessage(String.format("Can't find any user matching %s", args)).queue();
+            channel.sendMessage(String.format("Can't find any user matching %s!", args)).queue();
             return;
         }
         if (targetUser.getIdLong() == guild.getJDA().getSelfUser().getIdLong()) {
-            channel.sendMessage(String.format("I'm not going to %s myself :D", getTrigger())).queue();
+            channel.sendMessage(String.format("Eh! I'm not going to %s myself \uD83E\uDD14", getTrigger())).queue();
             return;
         }
         if (!PermissionUtil.canInteract(guild.getSelfMember(), guild.getMember(targetUser))) {
-            channel.sendMessage("I can't %s the user %s", getTrigger(), targetUser.getName()).queue();
+            channel.sendMessage("I can't %s the user %s.", getTrigger(), targetUser.getName()).queue();
             return;
         }
         if (doModAction(guild, guild.getMember(targetUser))) {
-            channel.sendMessage(String.format("%s recieved a %s!", targetUser.getName(), getTrigger())).queue();
+            channel.sendMessage(String.format("%s received a %s!", targetUser.getName(), getTrigger())).queue();
             return;
         }
-        channel.sendMessage("Failed to %s %s", getTrigger(), targetUser.getName());
+        channel.sendMessage("Failed to %s %s. Sad isn't it?", getTrigger(), targetUser.getName());
     }
 }
