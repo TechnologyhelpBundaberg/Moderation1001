@@ -14,8 +14,8 @@ import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static co.automod.bot.Main.conn;
-import static co.automod.bot.Main.r;
+import static co.automod.bot.core.Rethink.connection;
+import static co.automod.bot.core.Rethink.r;
 
 public class Automod {
     private static final Pattern discordURL = Pattern.compile("discord(?:(\\.(?:me|io|gg)|sites\\.com)\\/.{0,4}|app\\.com.{1,4}(?:invite|oauth2).{0,5}\\/)\\w+");
@@ -23,7 +23,7 @@ public class Automod {
 
     private Boolean enabled(Guild guild) {
         try {
-            return r.table("antilink").get(guild.getId()).getField("bool").run(conn);
+            return r.table("antilink").get(guild.getId()).getField("bool").run(connection);
         } catch (ReqlNonExistenceError ignored) {
         }
         return false;

@@ -1,8 +1,10 @@
 package co.automod.bot.commands.config;
 
+import co.automod.bot.core.Settings;
 import co.automod.bot.core.listener.CommandListener;
 import co.automod.bot.core.listener.command.Command;
-import co.automod.bot.data.GuildPrefix;
+import co.automod.bot.settings.PrefixSetting;
+import co.automod.bot.util.Emoji;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.Guild;
@@ -12,9 +14,6 @@ import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.utils.PermissionUtil;
 
 import java.awt.*;
-
-import static co.automod.bot.Main.conn;
-import static co.automod.bot.Main.r;
 
 public class ServerPrefixCommand extends Command {
     @Override
@@ -47,8 +46,10 @@ public class ServerPrefixCommand extends Command {
             return;
         }
         String prefix = args.replace(" ", "");
-        CommandListener.forgetGuild(guild);
-        r.table("prefixes").insert(new GuildPrefix(guild.getId(), prefix)).optArg("conflict", "replace").runNoReply(conn);
-        channel.sendMessage("\u2705 **Set the prefix to `" + prefix + "`**").queue();
+        if (Settings.update(guild, PrefixSetting.class, prefix)) {
+            channel.sendMessage(Emoji.OK + " **Set the prefix to `" + prefix + "`**").queue();
+        } else {
+            channel.sendMessage(Emoji.X + " **Failed to update prefix!**").queue();
+        }
     }
 }

@@ -12,7 +12,7 @@ public class Config {
     @ConfigurationOption
     public static int rethink_port = 28015;
     @ConfigurationOption
-    public static String rethink_db_name = "automod";
+    public static String rethink_db_name = "settings";
 
     @ConfigurationOption
     public static String default_command_prefix = "p!";

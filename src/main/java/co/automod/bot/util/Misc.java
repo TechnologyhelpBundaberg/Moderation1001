@@ -1,5 +1,6 @@
 package co.automod.bot.util;
 
+import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
@@ -13,6 +14,7 @@ import java.util.regex.Pattern;
 
 public class Misc {
     private static final Pattern mentionUserPattern = Pattern.compile("<@!?([0-9]{8,})>");
+    private static final Pattern channelPattern = Pattern.compile("<#!?([0-9]{4,})>");
     private final static HashSet<String> fuzzyTrue = new HashSet<>(Arrays.asList("yea", "yep", "yes", "true", "ja", "y", "t", "1", "check"));
     private final static HashSet<String> fuzzyFalse = new HashSet<>(Arrays.asList("no", "false", "nope", "nein", "nee", "n", "f", "0", "off"));
 
@@ -47,6 +49,14 @@ public class Misc {
     }
 
     /**
+     * @param input string to check for mentions
+     * @return found a mention
+     */
+    public static boolean isChannelMention(String input) {
+        return channelPattern.matcher(input).matches();
+    }
+
+    /**
      * Converts a user mention to an id
      *
      * @param mention the mention to filter
@@ -55,6 +65,21 @@ public class Misc {
     public static String mentionToId(String mention) {
         String id = "";
         Matcher matcher = mentionUserPattern.matcher(mention);
+        if (matcher.find()) {
+            id = matcher.group(1);
+        }
+        return id;
+    }
+
+    /**
+     * Converts a user mention to an id
+     *
+     * @param mention the mention to filter
+     * @return a stripped down version of the mention
+     */
+    public static String channelMentionToId(String mention) {
+        String id = "";
+        Matcher matcher = channelPattern.matcher(mention);
         if (matcher.find()) {
             id = matcher.group(1);
         }
@@ -107,6 +132,22 @@ public class Misc {
         }
         if (!potential.isEmpty()) {
             return potential.get(smallestDiffIndex);
+        }
+        return null;
+    }
+
+    /**
+     * find a text channel by name
+     *
+     * @param guild       the guild to search in
+     * @param channelName the channel to search for
+     * @return TextChannel || null
+     */
+    public static TextChannel findChannel(Guild guild, String channelName) {
+        for (TextChannel channel : guild.getTextChannels()) {
+            if (channel.getName().equalsIgnoreCase(channelName)) {
+                return channel;
+            }
         }
         return null;
     }

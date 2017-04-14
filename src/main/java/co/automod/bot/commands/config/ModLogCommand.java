@@ -1,8 +1,9 @@
 package co.automod.bot.commands.config;
 
+import co.automod.bot.core.Settings;
 import co.automod.bot.core.listener.command.Command;
-import co.automod.bot.data.GuildChannel;
-import com.rethinkdb.gen.exc.ReqlNonExistenceError;
+import co.automod.bot.settings.ModLogChannelSetting;
+import co.automod.bot.util.Misc;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.Message;
@@ -12,8 +13,6 @@ import net.dv8tion.jda.core.utils.PermissionUtil;
 
 import java.util.List;
 
-import static co.automod.bot.Main.conn;
-import static co.automod.bot.Main.r;
 
 public class ModLogCommand extends Command {
     @Override
@@ -39,32 +38,29 @@ public class ModLogCommand extends Command {
         };
     }
 
-    private void deleteGuild(Guild guild) {
-        r.table("modlog").get(guild.getId()).delete().runNoReply(conn);
-    }
-
     @Override
     public void execute(Guild guild, TextChannel channel, User invoker, Message message, String args) {
         boolean hasPerms = PermissionUtil.checkPermission(guild, guild.getMember(invoker), Permission.MANAGE_SERVER);
         if (!hasPerms) return;
-        if (args.equalsIgnoreCase("off") || args.equalsIgnoreCase("disable") || args.equalsIgnoreCase("false")) {
-            try {
-                deleteGuild(message.getGuild());
-                channel.sendMessage("\u2705 **Disabled modlog**").queue();
-                return;
-            } catch (ReqlNonExistenceError ignored) {
+        if (args.isEmpty()) {
+            if (Settings.getSetting(guild).modlog.isEmpty()) {
                 channel.sendMessage("\u274C **Mod Log is not set**").queue();
-                return;
+            } else {
+                channel.sendMessage("\u2705 ** The modlog is set to " + guild.getTextChannelById(Settings.getSetting(guild).modlog).getAsMention() + " .**").queue();
             }
+            return;
+        }
+        if (Misc.isFuzzyFalse(args)) {
+            Settings.update(guild, ModLogChannelSetting.class, "");
+            channel.sendMessage("\u2705 **Disabled modlog**").queue();
+            return;
         }
         List<TextChannel> ments = message.getMentionedChannels();
-        if (ments.isEmpty()) {
+        if (!Settings.update(guild, ModLogChannelSetting.class, args)) {
             channel.sendMessage("\u274C **You must mention a channel you want the modlog to be in**").queue();
             return;
         }
         TextChannel ch = ments.get(0);
-        r.table("modlog").insert(new GuildChannel(guild.getId(), ch.getId())).optArg("conflict", "replace")
-                .runNoReply(conn);
         channel.sendMessage("\u2705 **Set " + ch.getAsMention() + " as the modlog channel**").queue();
     }
 }

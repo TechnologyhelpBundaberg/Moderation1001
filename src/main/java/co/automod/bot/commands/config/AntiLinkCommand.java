@@ -1,17 +1,15 @@
 package co.automod.bot.commands.config;
 
+import co.automod.bot.core.GuildConfiguration;
+import co.automod.bot.core.Settings;
 import co.automod.bot.core.listener.command.Command;
-import co.automod.bot.data.GuildBool;
-import com.rethinkdb.gen.exc.ReqlNonExistenceError;
+import co.automod.bot.util.Misc;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.utils.PermissionUtil;
-
-import static co.automod.bot.Main.conn;
-import static co.automod.bot.Main.r;
 
 public class AntiLinkCommand extends Command {
     @Override
@@ -41,22 +39,19 @@ public class AntiLinkCommand extends Command {
     @Override
     public void execute(Guild guild, TextChannel channel, User invoker, Message message, String args) {
         boolean hasPerms = PermissionUtil.checkPermission(guild, guild.getMember(invoker), Permission.MANAGE_SERVER);
+        GuildConfiguration setting = Settings.getSetting(guild);
+
         if (!hasPerms) return;
-        Boolean bool = true;
+        Boolean needsUpdating = true;
         boolean enabled;
-        try {
-            enabled = r.table("antilink").get(guild.getId()).getField("bool").run(conn);
-        } catch (ReqlNonExistenceError ignored) {
-            enabled = false;
+        if (Misc.isFuzzyTrue(args) || Misc.isFuzzyFalse(args)) {
+            needsUpdating = false;
         }
-        if (args.equalsIgnoreCase("false") || args.equalsIgnoreCase("off")) {
-            bool = false;
-        } else if (enabled) {
-            bool = false;
+        if (!needsUpdating) {
+
         }
-        r.table("antilink").insert(new GuildBool(guild.getId(), bool)).optArg("conflict", "replace")
-                .runNoReply(conn);
-        if (bool) {
+        Settings.update(guild, "antilink", String.valueOf(needsUpdating));
+        if (needsUpdating) {
             channel.sendMessage("\u2705 **Anti Link has been enabled!**").queue();
         } else {
             channel.sendMessage("\u274C **Anti Link has been disabled**").queue();
