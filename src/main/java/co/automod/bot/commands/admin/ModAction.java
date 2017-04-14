@@ -46,7 +46,7 @@ public abstract class ModAction extends Command {
             return;
         }
         if (doModAction(guild, guild.getMember(targetUser))) {
-            channel.sendMessage(String.format("%s is gone! \uD83D\uDD28", targetUser.getName(), getTrigger())).queue();
+            channel.sendMessage(String.format("%s is gone! \uD83D\uDD28",targetUser.getName()).queue();
             return;
         }
         channel.sendMessage("Failed to %s %s. Sad isn't it?", getTrigger(), targetUser.getName());
