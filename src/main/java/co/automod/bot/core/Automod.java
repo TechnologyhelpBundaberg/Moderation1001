@@ -10,15 +10,16 @@ import net.dv8tion.jda.core.events.message.guild.GuildMessageUpdateEvent;
 import net.dv8tion.jda.core.hooks.SubscribeEvent;
 import net.dv8tion.jda.core.utils.PermissionUtil;
 
+import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static co.automod.bot.Main.conn;
 import static co.automod.bot.Main.r;
 
-public class AntiLink {
+public class Automod {
     private static final Pattern discordURL = Pattern.compile("discord(?:(\\.(?:me|io|gg)|sites\\.com)\\/.{0,4}|app\\.com.{1,4}(?:invite|oauth2).{0,5}\\/)\\w+");
-    private final Permission[] ignoredPerms = {Permission.MANAGE_SERVER, Permission.MANAGE_ROLES};
+    private final Permission[] ignoredPerms = {Permission.MANAGE_SERVER, Permission.MANAGE_ROLES, Permission.BAN_MEMBERS, Permission.KICK_MEMBERS};
 
     private Boolean enabled(Guild guild) {
         try {
@@ -34,8 +35,11 @@ public class AntiLink {
         return input;
     }
 
-    private Boolean hasPerms(Member member) {
-        return PermissionUtil.checkPermission(member.getGuild(), member, ignoredPerms);
+    private boolean ignoreMember(Member member) {
+        if (member.getUser().getIdLong() == 97433066384928768L) {
+            return false;
+        }
+        return Arrays.stream(ignoredPerms).anyMatch(perm -> PermissionUtil.checkPermission(member.getGuild(), member, perm));
     }
 
     private void handleMessage(Message message, Member member) {
@@ -43,7 +47,7 @@ public class AntiLink {
         if (!content.contains("discord")) return;
         if (message.getAuthor().getId().equals(message.getJDA().getSelfUser().getId())) return;
         if (!enabled(message.getGuild())) return;
-        if (hasPerms(member)) return;
+        if (ignoreMember(member)) return;
         String cleanContent = cleanString(content);
         Matcher m = discordURL.matcher(cleanContent);
         if (m.find()) {

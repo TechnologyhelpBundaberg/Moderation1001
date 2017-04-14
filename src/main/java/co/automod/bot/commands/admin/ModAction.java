@@ -38,6 +38,10 @@ public abstract class ModAction extends Command {
             channel.sendMessage(String.format("Eh! I'm not going to %s myself \uD83E\uDD14", getTrigger())).queue();
             return;
         }
+        if (targetUser.getIdLong() == invoker.getIdLong()) {
+            channel.sendMessage(String.format("I am not going to %s you ;)", getTrigger())).queue();
+            return;
+        }
         if (!PermissionUtil.canInteract(guild.getSelfMember(), guild.getMember(targetUser))) {
             channel.sendMessage("I can't %s the user %s.", getTrigger(), targetUser.getName()).queue();
             return;

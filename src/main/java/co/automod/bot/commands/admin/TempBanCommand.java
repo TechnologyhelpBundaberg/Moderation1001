@@ -24,7 +24,7 @@ public class TempBanCommand extends ModAction {
 
     @Override
     public String[] getAliases() {
-        return new String[0];
+        return new String[]{"softban"};
     }
 
     @Override
