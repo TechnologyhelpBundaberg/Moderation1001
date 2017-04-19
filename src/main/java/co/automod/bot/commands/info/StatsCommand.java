@@ -4,10 +4,7 @@ import co.automod.bot.Main;
 import co.automod.bot.core.ShardContainer;
 import co.automod.bot.core.listener.command.Command;
 import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.entities.Message;
-import net.dv8tion.jda.core.entities.TextChannel;
-import net.dv8tion.jda.core.entities.User;
+import net.dv8tion.jda.core.entities.*;
 
 import java.awt.*;
 import java.util.Arrays;
@@ -35,7 +32,7 @@ public class StatsCommand extends Command {
 
 
     @Override
-    public void execute(Guild guild, TextChannel channel, User invoker, Message message, String args) {
+    public void execute(Guild guild, TextChannel channel, User invoker, Member member, Message message, String args) {
         String MemberCount = String.valueOf(Arrays.stream(Main.bot.getShards()).mapToLong(shard -> shard.getJda().getUsers().size()).sum());
         String serversCount = String.valueOf(Arrays.stream(Main.bot.getShards()).mapToLong(shard -> shard.getJda().getGuilds().size()).sum());
         String channelCount = String.valueOf(Arrays.stream(Main.bot.getShards()).mapToLong(shard -> shard.getJda().getTextChannels().size()).sum());

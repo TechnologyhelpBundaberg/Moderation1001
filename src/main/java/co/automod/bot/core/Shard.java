@@ -70,7 +70,7 @@ public class Shard {
             return;
         }
         commandExecutor.submit(() -> {
-            commandListener.execute(e.getGuild(), e.getChannel(), e.getAuthor(), e.getMessage(), prefix);
+            commandListener.execute(e.getGuild(), e.getChannel(), e.getAuthor(), e.getMember(), e.getMessage(), prefix);
         });
     }
 }

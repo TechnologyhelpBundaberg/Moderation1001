@@ -6,10 +6,7 @@ import co.automod.bot.Main;
 import co.automod.bot.commands.CommandCategory;
 import co.automod.bot.core.Settings;
 import co.automod.bot.core.listener.command.Command;
-import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.entities.Message;
-import net.dv8tion.jda.core.entities.TextChannel;
-import net.dv8tion.jda.core.entities.User;
+import net.dv8tion.jda.core.entities.*;
 import org.reflections.Reflections;
 
 import java.lang.reflect.InvocationTargetException;
@@ -98,7 +95,7 @@ public class CommandListener {
      * @param message the mesage
      * @return successfully executed?
      */
-    public boolean execute(Guild guild, TextChannel channel, User author, Message message, String prefix) {
+    public boolean execute(Guild guild, TextChannel channel, User author, Member member, Message message, String prefix) {
         String[] split = message.getRawContent().split(" ", 2);
         if (split[0].length() <= prefix.length()) {
             return false;
@@ -108,7 +105,7 @@ public class CommandListener {
         if (command == null) {
             return false;
         }
-        command.execute(guild, channel, author, message, split.length == 1 ? "" : split[1]);
+        command.execute(guild, channel, author, member, message, split.length == 1 ? "" : split[1]);
         return true;
     }
 }

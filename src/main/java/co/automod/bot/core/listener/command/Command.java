@@ -1,10 +1,7 @@
 package co.automod.bot.core.listener.command;
 
 import co.automod.bot.commands.CommandCategory;
-import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.entities.Message;
-import net.dv8tion.jda.core.entities.TextChannel;
-import net.dv8tion.jda.core.entities.User;
+import net.dv8tion.jda.core.entities.*;
 
 public abstract class Command {
     private CommandCategory category = CommandCategory.UNKNOWN;
@@ -57,7 +54,7 @@ public abstract class Command {
      * @param message the message
      * @param args    arguments
      */
-    public abstract void execute(Guild guild, TextChannel channel, User invoker, Message message, String args);
+    public abstract void execute(Guild guild, TextChannel channel, User invoker, Member member, Message message, String args);
 
     /**
      * the category of the command (based on packagename)

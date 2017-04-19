@@ -2,10 +2,7 @@ package co.automod.bot.commands.info;
 
 import co.automod.bot.core.listener.command.Command;
 import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.entities.Message;
-import net.dv8tion.jda.core.entities.TextChannel;
-import net.dv8tion.jda.core.entities.User;
+import net.dv8tion.jda.core.entities.*;
 
 import java.awt.*;
 
@@ -32,7 +29,7 @@ public class PingCommand extends Command {
 
 
     @Override
-    public void execute(Guild guild, TextChannel channel, User invoker, Message message, String args) {
+    public void execute(Guild guild, TextChannel channel, User invoker, Member member, Message message, String args) {
         long startTime = System.currentTimeMillis();
         channel.sendTyping().complete();
         long stopTime = System.currentTimeMillis();

@@ -6,10 +6,7 @@ import co.automod.bot.core.listener.command.Command;
 import co.automod.bot.util.Emoji;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
-import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.entities.Message;
-import net.dv8tion.jda.core.entities.TextChannel;
-import net.dv8tion.jda.core.entities.User;
+import net.dv8tion.jda.core.entities.*;
 import net.dv8tion.jda.core.utils.PermissionUtil;
 
 import java.util.HashMap;
@@ -43,7 +40,7 @@ public class HelpCommand extends Command {
     }
 
     @Override
-    public void execute(Guild guild, TextChannel channel, User invoker, Message message, String args) {
+    public void execute(Guild guild, TextChannel channel, User invoker, Member member, Message message, String args) {
         if (fullHelpText == null) {
             createHelpCache();
         }

@@ -14,7 +14,7 @@ public abstract class ModAction extends Command {
     abstract boolean doModAction(Guild guild, Member member);
 
     @Override
-    public void execute(Guild guild, TextChannel channel, User invoker, Message message, String args) {
+    public void execute(Guild guild, TextChannel channel, User invoker, Member member, Message message, String args) {
         if (getRequiredPermission() != null) {
             if (!PermissionUtil.checkPermission(guild, guild.getMember(invoker), getRequiredPermission())) {
                 channel.sendMessage(String.format("\u274C| It seems like you don't have the `%s` permission! **Make sure that you have the `%s` permission.**", getTrigger(), getRequiredPermission())).queue();

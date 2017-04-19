@@ -11,9 +11,6 @@ public class Rethink {
 
     public static void init() {
         connection = r.connection().hostname(Config.rethink_host).port(Config.rethink_port).db(Config.rethink_db_name).connect();
-        if (!(boolean) r.dbList().contains(Config.rethink_db_name).run(connection)) {
-            r.dbCreate(Config.rethink_db_name).runNoReply(connection);
-        }
         String[] requiredTables = {"modlog", "antilink", "prefixes"};
         for (String tbl : requiredTables) {
             createTable(tbl);

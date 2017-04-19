@@ -50,3 +50,4 @@ Temporary Items
 gradle
 bot.cfg
 build
+*.jar
