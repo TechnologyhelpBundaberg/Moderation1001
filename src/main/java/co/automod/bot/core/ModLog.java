@@ -21,9 +21,6 @@ import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
-import static co.automod.bot.core.Rethink.connection;
-import static co.automod.bot.core.Rethink.r;
-
 public class ModLog {
     private final DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
     private final Cache<String, Optional<Message>> MessageCache = CacheBuilder.newBuilder().concurrencyLevel(10).maximumSize(2500).build();
@@ -37,12 +34,13 @@ public class ModLog {
         }
     }
 
-    private String getChannel(Guild guild) {
-        return Settings.getSetting(guild).modlog;
+    private boolean isEnabled(Guild guild) {
+        String modLogChannel = Settings.getSetting(guild).modlog;
+        return !modLogChannel.isEmpty() && guild.getTextChannelById(modLogChannel) != null && guild.getTextChannelById(modLogChannel).canTalk();
     }
 
-    private void deleteGuild(Guild guild) {
-        r.table("modlog").get(guild.getId()).delete().runNoReply(connection);
+    private TextChannel getChannel(Guild guild) {
+        return guild.getTextChannelById(Settings.getSetting(guild).modlog);
     }
 
     private String getTime() {
@@ -64,12 +62,12 @@ public class ModLog {
 
     @SubscribeEvent
     public void onDelete(GuildMessageDeleteEvent e) {
-        String tempChannel = getChannel(e.getGuild());
-        if (tempChannel == null || tempChannel.isEmpty()) return;
-        TextChannel channel = e.getJDA().getTextChannelById(tempChannel);
+        if (!isEnabled(e.getGuild())) {
+            return;
+        }
+        TextChannel channel = getChannel(e.getGuild());
         if (channel == null) {
-            System.out.println("Could not find channel for id " + tempChannel);
-            deleteGuild(e.getGuild());
+            System.out.println("Could not find channel for id " + Settings.getSetting(e.getGuild()).modlog);
             return;
         }
         if (!e.getGuild().getId().equals(channel.getGuild().getId())) return;
@@ -100,12 +98,12 @@ public class ModLog {
 
     @SubscribeEvent
     public void onEdit(GuildMessageUpdateEvent e) {
-        String tempChannel = getChannel(e.getGuild());
-        if (tempChannel == null || tempChannel.isEmpty()) return;
-        TextChannel channel = e.getJDA().getTextChannelById(tempChannel);
+        if (!isEnabled(e.getGuild())) {
+            return;
+        }
+        TextChannel channel = getChannel(e.getGuild());
         if (channel == null) {
-            System.out.println("Could not find channel for id " + tempChannel);
-            deleteGuild(e.getGuild());
+            System.out.println("Could not find channel for id " + Settings.getSetting(e.getGuild()).modlog);
             return;
         }
         if (!e.getGuild().getId().equals(channel.getGuild().getId())) return;
@@ -122,12 +120,12 @@ public class ModLog {
 
     @SubscribeEvent
     public void onLeave(GuildMemberLeaveEvent e) {
-        String tempChannel = getChannel(e.getGuild());
-        if (tempChannel == null || tempChannel.isEmpty()) return;
-        TextChannel channel = e.getJDA().getTextChannelById(tempChannel);
+        if (!isEnabled(e.getGuild())) {
+            return;
+        }
+        TextChannel channel = getChannel(e.getGuild());
         if (channel == null) {
-            System.out.println("Could not find channel for id " + tempChannel);
-            deleteGuild(e.getGuild());
+            System.out.println("Could not find channel for id " + Settings.getSetting(e.getGuild()).modlog);
             return;
         }
         if (!e.getGuild().getId().equals(channel.getGuild().getId())) return;
@@ -139,12 +137,12 @@ public class ModLog {
 
     @SubscribeEvent
     public void onJoin(GuildMemberJoinEvent e) {
-        String tempChannel = getChannel(e.getGuild());
-        if (tempChannel == null || tempChannel.isEmpty()) return;
-        TextChannel channel = e.getJDA().getTextChannelById(tempChannel);
+        if (!isEnabled(e.getGuild())) {
+            return;
+        }
+        TextChannel channel = getChannel(e.getGuild());
         if (channel == null) {
-            System.out.println("Could not find channel for id " + tempChannel);
-            deleteGuild(e.getGuild());
+            System.out.println("Could not find channel for id " + Settings.getSetting(e.getGuild()).modlog);
             return;
         }
         if (!e.getGuild().getId().equals(channel.getGuild().getId())) return;
@@ -158,12 +156,12 @@ public class ModLog {
 
     @SubscribeEvent
     public void onBan(GuildBanEvent e) {
-        String tempChannel = getChannel(e.getGuild());
-        if (tempChannel == null || tempChannel.isEmpty()) return;
-        TextChannel channel = e.getJDA().getTextChannelById(tempChannel);
+        if (!isEnabled(e.getGuild())) {
+            return;
+        }
+        TextChannel channel = getChannel(e.getGuild());
         if (channel == null) {
-            System.out.println("Could not find channel for id " + tempChannel);
-            deleteGuild(e.getGuild());
+            System.out.println("Could not find channel for id " + Settings.getSetting(e.getGuild()).modlog);
             return;
         }
         if (!e.getGuild().getId().equals(channel.getGuild().getId())) return;
@@ -176,12 +174,12 @@ public class ModLog {
 
     @SubscribeEvent
     public void onNickChange(GuildMemberNickChangeEvent e) {
-        String tempChannel = getChannel(e.getGuild());
-        if (tempChannel == null || tempChannel.isEmpty()) return;
-        TextChannel channel = e.getJDA().getTextChannelById(tempChannel);
+        if (!isEnabled(e.getGuild())) {
+            return;
+        }
+        TextChannel channel = getChannel(e.getGuild());
         if (channel == null) {
-            System.out.println("Could not find channel for id " + tempChannel);
-            deleteGuild(e.getGuild());
+            System.out.println("Could not find channel for id " + Settings.getSetting(e.getGuild()).modlog);
             return;
         }
         if (!e.getGuild().getId().equals(channel.getGuild().getId())) return;
@@ -193,12 +191,12 @@ public class ModLog {
 
     @SubscribeEvent
     public void roleAdd(GuildMemberRoleAddEvent e) {
-        String tempChannel = getChannel(e.getGuild());
-        if (tempChannel == null || tempChannel.isEmpty()) return;
-        TextChannel channel = e.getJDA().getTextChannelById(tempChannel);
+        if (!isEnabled(e.getGuild())) {
+            return;
+        }
+        TextChannel channel = getChannel(e.getGuild());
         if (channel == null) {
-            System.out.println("Could not find channel for id " + tempChannel);
-            deleteGuild(e.getGuild());
+            System.out.println("Could not find channel for id " + Settings.getSetting(e.getGuild()).modlog);
             return;
         }
         if (!e.getGuild().getId().equals(channel.getGuild().getId())) return;
@@ -211,12 +209,12 @@ public class ModLog {
 
     @SubscribeEvent
     public void roleRemove(GuildMemberRoleRemoveEvent e) {
-        String tempChannel = getChannel(e.getGuild());
-        if (tempChannel == null || tempChannel.isEmpty()) return;
-        TextChannel channel = e.getJDA().getTextChannelById(tempChannel);
+        if (!isEnabled(e.getGuild())) {
+            return;
+        }
+        TextChannel channel = getChannel(e.getGuild());
         if (channel == null) {
-            System.out.println("Could not find channel for id " + tempChannel);
-            deleteGuild(e.getGuild());
+            System.out.println("Could not find channel for id " + Settings.getSetting(e.getGuild()).modlog);
             return;
         }
         if (!e.getGuild().getId().equals(channel.getGuild().getId())) return;
@@ -233,13 +231,13 @@ public class ModLog {
         String after = e.getUser().getName() + "#" + e.getUser().getDiscriminator();
         List<Guild> userGuilds = e.getJDA().getGuilds().stream().filter(g -> g.getMembers().stream().map(Member::getUser).collect(Collectors.toList()).contains(e.getUser())).collect(Collectors.toList());
         for (Guild guild : userGuilds) {
-            String tempChannel = getChannel(guild);
-            if (tempChannel == null || tempChannel.isEmpty()) return;
-            TextChannel channel = e.getJDA().getTextChannelById(tempChannel);
+            if (!isEnabled(guild)) {
+                continue;
+            }
+            TextChannel channel = getChannel(guild);
             if (channel == null) {
-                System.out.println("Could not find channel for id " + tempChannel);
-                deleteGuild(guild);
-                return;
+                System.out.println("Could not find channel for id " + Settings.getSetting(guild).modlog);
+                continue;
             }
             String time = getTime();
             channel.sendMessage(String.format("\uD83C\uDFF7 `[%s]` **%s** Changed their username `%s` ➥ `%s`", time, before, before, after)).queue(msg -> SelfCache.put(msg.getId(), Optional.of(msg.getRawContent())));

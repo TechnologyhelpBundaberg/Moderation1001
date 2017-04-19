@@ -26,7 +26,7 @@ public class ModLogChannelSetting extends GuildSetting<TextChannelSettingType> {
 
     @Override
     public String getDefault() {
-        return "false";
+        return "";
     }
 
     @Override
