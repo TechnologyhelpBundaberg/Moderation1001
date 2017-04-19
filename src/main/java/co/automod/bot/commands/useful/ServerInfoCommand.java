@@ -1,9 +1,11 @@
 package co.automod.bot.commands.useful;
 
 import co.automod.bot.core.listener.command.Command;
+import com.sun.security.auth.callback.TextCallbackHandler;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.OnlineStatus;
 import net.dv8tion.jda.core.entities.*;
+import sun.security.ec.SunEC;
 
 import java.time.Duration;
 import java.time.OffsetDateTime;
@@ -70,6 +72,7 @@ public class ServerInfoCommand extends Command {
         String days = String.valueOf(Duration.between(creationTime, OffsetDateTime.now()).toDays());
         String completeTimeString = String.format("**Created %s %s %s %s | %s Days ago!**", creationTime.getDayOfMonth(), month, year, timeString, days);
         String iconUrl = guild.getIconUrl();
+        String SecurityEnabled = guild.getRequiredMFALevel().name().equals("TWO_FACTOR_AUTH") ? "Enabled" : "Disabled";
         String bans;
         try {
             bans = String.valueOf(guild.getController().getBans().complete().size());
@@ -82,6 +85,7 @@ public class ServerInfoCommand extends Command {
                 .setDescription(completeTimeString)
                 .setThumbnail(iconUrl == null ? "https://pbs.twimg.com/profile_images/843139126920544256/YeVk_bj-.jpg" : iconUrl)
                 .addField("Server Region", region, true)
+                .addField("2FA Enabled", SecurityEnabled, true)
                 .addField("Users online/total", users, true)
                 .addField("Bots online/total", bots, true)
                 .addField("Text Channels", textChannels + " | Hidden (" + user + ") - " + hiddenChannels, true)
