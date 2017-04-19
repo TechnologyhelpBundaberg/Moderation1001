@@ -55,7 +55,8 @@ public class ServerInfoCommand extends Command {
         String region = guild.getRegion().getName();
         List<TextChannel> channelList = guild.getTextChannels();
         String textChannels = String.valueOf(channelList.size());
-        String hiddenChannels = String.valueOf(channelList.stream().filter(channel1 -> cantSee(member, channel1)).count());
+        long hiddenChannels = channelList.stream().filter(channel1 -> cantSee(member, channel1)).count();
+        String hidden = hiddenChannels != 0 ? " | Hidden (" + user + ") - " + hiddenChannels : "";
         String voiceChannels = String.valueOf(guild.getVoiceChannels().size());
         String roles = String.valueOf(guild.getRoles().size());
         String highestRole = guild.getRoles().get(0).getName();
@@ -85,10 +86,10 @@ public class ServerInfoCommand extends Command {
                 .setDescription(completeTimeString)
                 .setThumbnail(iconUrl == null ? "https://pbs.twimg.com/profile_images/843139126920544256/YeVk_bj-.jpg" : iconUrl)
                 .addField("Server Region", region, true)
-                .addField("2FA Enabled", SecurityEnabled, true)
+                .addField("2FA", SecurityEnabled, true)
                 .addField("Users online/total", users, true)
                 .addField("Bots online/total", bots, true)
-                .addField("Text Channels", textChannels + " | Hidden (" + user + ") - " + hiddenChannels, true)
+                .addField("Text Channels", textChannels + hidden, false)
                 .addField("Voice Channels", voiceChannels, true)
                 .addField("Roles", roles, true)
                 .addField("Highest Role", highestRole, true)
