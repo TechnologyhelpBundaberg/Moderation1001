@@ -5,7 +5,7 @@ public enum CommandCategory {
     CONFIGURATION("config", "\u2699\ufe0f", "Configuration"),
     ADMINISTRATIVE("admin", "\uD83D\uDC6E", "Administration"),
     USEFUL("useful", "\uD83D\uDC4C", "Useful"),
-    UNKNOWN("?", "\u2753", "Unknown"),;
+    UNKNOWN("?", "\uD83E\uDD14", "Misc"),;
 
     private final String packageName;
     private final String emote;
