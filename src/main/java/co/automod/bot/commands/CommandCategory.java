@@ -4,6 +4,7 @@ public enum CommandCategory {
     INFORMATIVE("info", "\u2139", "Information"),
     CONFIGURATION("config", "\u2699\ufe0f", "Configuration"),
     ADMINISTRATIVE("admin", "\uD83D\uDC6E", "Administration"),
+    USEFUL("useful", "\uD83D\uDC4C", "Useful"),
     UNKNOWN("?", "\u2753", "Unknown"),;
 
     private final String packageName;
