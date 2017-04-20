@@ -1,11 +1,9 @@
 package co.automod.bot.commands.useful;
 
 import co.automod.bot.core.listener.command.Command;
-import com.sun.security.auth.callback.TextCallbackHandler;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.OnlineStatus;
 import net.dv8tion.jda.core.entities.*;
-import sun.security.ec.SunEC;
 
 import java.time.Duration;
 import java.time.OffsetDateTime;
