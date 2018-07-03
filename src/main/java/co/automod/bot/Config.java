@@ -5,7 +5,7 @@ import com.kaaz.configuration.ConfigurationOption;
 public class Config {
 
     @ConfigurationOption
-    public static String discord_token = "your-discord-token";
+    public static String discord_token = "NDYzNTQwMDQ2NjgzOTYzNDAy.Dhx40w._UZC6DKJGe-4x6-2KRmOk9j4fiY";
 
     @ConfigurationOption
     public static String rethink_host = "localhost";
